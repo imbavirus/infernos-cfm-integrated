@@ -8,6 +8,7 @@ First-party Infernos bridge for **MrCrayfish's Furniture Mod: Refurbished** on N
 | **CC:Tweaked / MekaCC** | Peripherals on switches, appliances, generator, mailbox, adaptor. Global Lua `furniture.arcade()`. |
 | **Home Assistant** | MQTT discovery + state + command for `IHomeControlDevice`. Off by default (`haEnabled`). |
 | **Infernos Arcade** | Furniture computer program: catalog + local Brickfall. Hub / game rows open infernos.co.za/arcade in **MCEF** (same Chromium as BlueMap Viewer). |
+| **Infernos Link** | Pairing code on the furniture computer. Claim/share on the website. Computers attach to the existing **MekAcc server** (same bridge token). |
 
 ## IDs
 

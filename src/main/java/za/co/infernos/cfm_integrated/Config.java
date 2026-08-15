@@ -65,6 +65,22 @@ public final class Config {
             .comment("Infernos Arcade API base (no trailing slash)")
             .define("arcadeApiBase", "https://infernos.co.za");
 
+    public static final ModConfigSpec.BooleanValue BRIDGE_ENABLED = BUILDER
+            .comment("Opt-in Infernos website bridge. Furniture computers attach to the existing MekAcc server (same URL + token).")
+            .define("bridgeEnabled", false);
+
+    public static final ModConfigSpec.ConfigValue<String> BRIDGE_URL = BUILDER
+            .comment("Infernos site origin, same as infernos_mekacc bridgeUrl (e.g. https://infernos.co.za)")
+            .define("bridgeUrl", "");
+
+    public static final ModConfigSpec.ConfigValue<String> BRIDGE_TOKEN = BUILDER
+            .comment("Must match MEKACC_BRIDGE_TOKEN / the MekAcc server token. Furniture computers land on that server.")
+            .define("bridgeToken", "");
+
+    public static final ModConfigSpec.IntValue BRIDGE_HEARTBEAT_SECONDS = BUILDER
+            .comment("Seconds between furniture-computer heartbeats")
+            .defineInRange("bridgeHeartbeatSeconds", 30, 15, 3600);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     private Config() {}

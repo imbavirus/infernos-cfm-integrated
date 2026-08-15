@@ -29,7 +29,17 @@ public final class FurnitureItemIo {
         registerContainer(event, ModBlockEntities.TOASTER.get());
         registerContainer(event, ModBlockEntities.MAIL_BOX.get());
         registerContainer(event, ModBlockEntities.STORAGE_JAR.get());
-        CfmIntegrated.LOGGER.info("Registered ItemHandler on furniture storage BEs");
+        registerContainer(event, ModBlockEntities.GRILL.get());
+        registerContainer(event, ModBlockEntities.CUTTING_BOARD.get());
+        registerContainer(event, ModBlockEntities.FRYING_PAN.get());
+        registerContainer(event, ModBlockEntities.POST_BOX.get());
+        registerContainer(event, ModBlockEntities.PLATE.get());
+        registerContainer(event, ModBlockEntities.ELECTRICITY_GENERATOR.get());
+        registerContainer(event, ModBlockEntities.KITCHEN_SINK.get());
+        registerContainer(event, ModBlockEntities.BASIN.get());
+        registerContainer(event, ModBlockEntities.BATH.get());
+        registerContainer(event, ModBlockEntities.TOILET.get());
+        CfmIntegrated.LOGGER.info("Registered ItemHandler on furniture inventories");
     }
 
     private static <T extends BlockEntity> void registerContainer(RegisterCapabilitiesEvent event, BlockEntityType<T> type) {

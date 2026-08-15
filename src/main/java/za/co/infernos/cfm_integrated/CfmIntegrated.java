@@ -13,7 +13,9 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 import za.co.infernos.cfm_integrated.arcade.InfernosArcadeProgram;
+import za.co.infernos.cfm_integrated.bridge.FurnitureBridge;
 import za.co.infernos.cfm_integrated.ha.HomeAssistantBridge;
+import za.co.infernos.cfm_integrated.link.InfernosLinkProgram;
 import za.co.infernos.cfm_integrated.mek.FurnitureItemIo;
 import za.co.infernos.cfm_integrated.registry.ModBlockEntities;
 import za.co.infernos.cfm_integrated.registry.ModBlocks;
@@ -37,6 +39,7 @@ public final class CfmIntegrated {
         modBus.addListener(this::registerCapabilities);
 
         NeoForge.EVENT_BUS.register(HomeAssistantBridge.class);
+        NeoForge.EVENT_BUS.register(FurnitureBridge.class);
     }
 
     public static ResourceLocation id(String path) {
@@ -46,7 +49,8 @@ public final class CfmIntegrated {
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             Computer.get().installProgram(id("infernos_arcade"), InfernosArcadeProgram::new);
-            LOGGER.info("Arcade program installed on furniture computers");
+            Computer.get().installProgram(id("infernos_link"), InfernosLinkProgram::new);
+            LOGGER.info("Arcade + Link programs installed on furniture computers");
         });
         if (ModList.get().isLoaded("computercraft")) {
             event.enqueueWork(() -> {

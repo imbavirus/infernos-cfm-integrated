@@ -2,5 +2,6 @@
   "itemGroup.cfm_integrated": "MrCrayfish Furniture Integrated",
   "block.cfm_integrated.mek_power_adaptor": "Mek Power Adaptor",
   "block.cfm_integrated.mek_hotplate": "Mek Hotplate",
-  "computer_program.cfm_integrated.infernos_arcade": "Infernos Arcade"
+  "computer_program.cfm_integrated.infernos_arcade": "Infernos Arcade",
+  "computer_program.cfm_integrated.infernos_link": "Infernos Link"
 }
