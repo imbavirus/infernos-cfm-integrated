@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "cfm_integrated:block/mek_hotplate"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "cfm_integrated:mek_power_adaptor",
+    "cfm_integrated:mek_hotplate"
+  ]
+}

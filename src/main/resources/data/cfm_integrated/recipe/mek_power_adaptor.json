@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "IRI",
+    "RFR",
+    "IRI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "F": {
+      "item": "refurbished_furniture:light_electricity_generator"
+    }
+  },
+  "result": {
+    "id": "cfm_integrated:mek_power_adaptor",
+    "count": 1
+  }
+}

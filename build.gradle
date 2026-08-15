@@ -1,0 +1,147 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '1.0.21'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url = 'https://maven.neoforged.net/releases' }
+    maven {
+        name = 'ModMaven'
+        url = 'https://modmaven.dev'
+    }
+    maven { url = 'https://api.modrinth.com/maven' }
+    maven { url = 'https://cursemaven.com' }
+    maven {
+        name = 'SquidDev'
+        url = 'https://maven.squiddev.cc'
+        content { includeGroup('cc.tweaked') }
+    }
+    maven {
+        url = 'https://squiddev.cc/maven/'
+        content { includeGroup('cc.tweaked') }
+    }
+    flatDir { dirs 'libs' }
+}
+
+base {
+    archivesName = "${mod_id}-${minecraft_version}-neoforge"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            ideName = 'Client'
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            ideName = 'Server'
+        }
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    compileOnly files(
+            'libs/refurbished_furniture-neoforge-1.21.1-1.0.22.jar',
+            'libs/framework-neoforge-1.21.1-0.13.11.jar',
+            'libs/mcef-neoforge-2.1.6-1.21.1.jar'
+    )
+    localRuntime files(
+            'libs/refurbished_furniture-neoforge-1.21.1-1.0.22.jar',
+            'libs/framework-neoforge-1.21.1-0.13.11.jar'
+    )
+
+    compileOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}"
+    compileOnly "mekanism:Mekanism:${minecraft_version}-${mekanism_version}:api"
+
+    compileOnly "cc.tweaked:cc-tweaked-1.21.1-core-api:${cct_version}"
+    compileOnly "cc.tweaked:cc-tweaked-1.21.1-forge-api:${cct_version}"
+    compileOnly "cc.tweaked:cc-tweaked-1.21.1-forge:${cct_version}"
+}
+
+var generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mekanism_version_range : mekanism_version_range,
+            refurbished_version_range: refurbished_version_range,
+            framework_version_range: framework_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = "file://${project.projectDir}/repo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}

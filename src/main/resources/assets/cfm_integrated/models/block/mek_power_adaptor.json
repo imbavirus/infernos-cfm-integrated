@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "cfm_integrated:block/mek_power_adaptor"
+  }
+}
